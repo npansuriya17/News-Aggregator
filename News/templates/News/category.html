@@ -1,0 +1,16 @@
+{% extends "news/layout.html" %}
+
+{% block content %}
+
+<div><h2>Highlights</h2></div>
+
+<div class="all-articles">
+    <table>
+        {% for eacharticle in articles %}
+            <tr><td>
+                {{ article.title }}
+            </td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

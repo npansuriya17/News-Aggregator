@@ -1,0 +1,31 @@
+{% extends "news/layout.html" %}
+
+{% block heading %}
+Add New Feed
+{% endblock %}
+
+{% block content %}
+
+<div class="all-articles">
+    <div class="new-feed-form">
+    <form method="POST">
+        {% csrf_token %}
+        <table id="new-feed-table">
+            <tr>
+                <td id="td-col1">Feed URL:</td>
+                <td id="td-col2">{{ form.url }}</td>
+            </tr>
+            <tr>
+                <td id="td-col1">Feed Category</td>
+                <td id="td-col2">{{ form.feed_category }}</td>
+            </tr>
+            <tr>
+                <td id="td-col1"></td>
+                <td id="td-col2"><button type="submit" name="btn-add-feed" id="btn-add-feed">Add</button></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+    
+{% endblock %}

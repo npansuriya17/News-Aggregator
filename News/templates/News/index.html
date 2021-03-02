@@ -1,0 +1,60 @@
+{% extends "news/layout.html" %}
+{% load  static %}
+
+{% block heading %}
+    {{ category }}
+{% endblock %}
+
+{% block content %}
+<div class="all-articles">
+    <br>
+    <br>
+    <div class="flex-allnews">
+        {% for eacharticle,img_item in articles %}
+            <div class="article">
+                <div class="headings navbar navbar-inverse"><h4>{{ eacharticle.title }}</h4></div>
+                {% if img_item %}
+                    <div class="article-image" style="margin-right: 4px;">{{ img_item|safe }}</div>
+                {% else %}
+                    <div class="article-image" style="margin-right: 4px;"><img align="left" border="0" hspace="10" src="{% static 'images/no-news-img.png' %}" style="margin-top: 3px; margin-right: 5px;"></div>
+                {% endif %}
+                <div class="news-text"><p>
+                    {% if 'img' not in eacharticle.summary %}
+                        {{ eacharticle.summary|truncatechars_html:150 }}
+                    {% elif eacharticle.description  %}
+                        {{ eacharticle.description|truncatechars_html:150 }}
+                    {% endif %}
+                    <small><a href="{{ eacharticle.url }}" target="blank">Read More</a></small><br></p>
+                </div>
+                
+                <small>{{ eacharticle.publication_date }}</small><br>
+                
+                <small>Source: {{ eacharticle.feed }}</small>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pages">
+        {% if all_articles.paginator.num_pages >= 1 and img_src_list.paginator.num_pages >= 1 %}
+            <ul id="page-list">
+            {% if all_articles.has_previous and img_src_list.has_previous %}
+                <li id="pg-num"><button><a href="?page={{ all_articles.previous_page_number }}"><img src="{% static 'images/previous-button.png' %}" class="nxt-img"></a></button></li>
+            {% endif %}
+                {% for pg in page_range %}
+                    {% if all_articles.number == pg %}
+                        <li id="pg-num"><a href="?page={{pg}}" class="pg-btn selected"><u>{{pg}}</u></a></li>
+                    {% else %}
+                        <li id="pg-num"><a href="?page={{pg}}" class="pg-btn">{{pg}}</a></li>
+                    {% endif %}
+                {% endfor %}
+            {% if all_articles.has_next and img_src_list.has_next %}
+                <li id="pg-num"><button class="nxt-btn">
+                    <a href="?page={{ all_articles.next_page_number }}"><img src="{% static 'images/next-button.png' %}" class="nxt-img"></a>
+                </button></li>
+            {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "news/layout.html" %}
+
+{% block heading %}
+    Feeds
+{% endblock %}
+
+{% block content %}
+<div class="all-articles">
+    <div id="heading"><p id="heading-add-feed">New Feed</p></div>
+    <div class="new-feed-form feed-table">
+        <form method="POST">
+            {% csrf_token %}
+                <span>Feed URL:</span>
+                <span>{{ form.url }}</span>
+                <span>Feed Category</span>
+                <span>{{ form.feed_category }}</span>
+                <span><button type="submit" name="btn-add-feed" id="btn-add-feed" value="Add">Add Feed</button></span>
+        </form>
+    </div>
+    <div id="feed-page">
+        <table class="feed-table">
+            <tr><td colspan="2"><hr style="border: 1px solid;"></tr>
+                {% for eachfeed in feeds %}
+                    <tr class="tr-feeds">
+                        <td class="col-1">
+                            <div class="each-feed">{{ eachfeed.title }}</div>
+                        </td>
+                        <td class="col-2">
+                            <div class="each-feed">
+                                <form method="POST">{% csrf_token %}
+                                {% if eachfeed.isActive %}
+                                    <button class="btn-feed" id="btn-actv" disabled>Active</button>
+                                {% else %}
+                                    <button class="btn-feed" id="btn-inactv" disabled>Inactive</button>
+                                {% endif %}
+                                    <input type="hidden" name="feed-id" value="{{ eachfeed.id }}">
+                                    <button class="btn-feed" name="btn-remove-feed" onclick="delete_alert(event)"><u>Remove X</u></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><td colspan="2"><hr style="border-top: 1px dotted;"></td></tr>
+                
+                {% endfor %}
+        </table>
+    </div>
+</div>
+
+<script>
+    function delete_alert(e) {
+        var ans = confirm("Are you sure you want to delete it ?");
+        if (ans) {
+            const element = document.querySelector(".each-feed");
+            element.classList.add("hide");
+            //alert(element.style.animation);
+            setTimeout(function(){ return true; }, 3000);
+        } else {
+            e.preventDefault();
+            return false;
+        }
+    }
+</script>
+{% endblock %}

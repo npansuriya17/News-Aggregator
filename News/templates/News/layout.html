@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simple News Aggregator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'news/style.css' %}" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar-inverse" id="nav-top">
+      <div class="container">
+        <div>
+          <a class="navbar-brand" href="">News Aggregator</a>
+        </div>
+        <div id="navbar">
+            <ul class="nav navbar-nav">
+                <li><a class="nav-menu" href="{% url 'articles' 'highlights' %}">Home</a></li>
+                <li><a class="nav-menu" href="{% url 'articles' 'business' %}">Business</a></li>
+                <li><a class="nav-menu" href="{% url 'articles' 'sports' %}">Sports</a></li>
+                <li><a class="nav-menu" href="{% url 'articles' 'entertainment' %}">Entertainment</a></li>
+                <li><a class="nav-menu" href="{% url 'articles' 'lifestyle' %}">Lifestyle</a></li>
+                <li><a class="nav-menu" href="{% url 'articles' 'technology' %}">Technology</a></li>
+                <li><a class="nav-menu" href="{% url 'feeds' %}">Feeds</a></li>
+            </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-container">
+      <div class="page-heading navbar-vertical">
+          <h3 id="heading-font">{% block heading %}{% endblock %}</h3><hr>
+          <div id="navbar">
+              <ul class="nav ul-vertical">
+                  <li><a class="verticle-menu" href="{% url 'articles' '1' %}">Today</a></li>
+                  <li><a class="verticle-menu" href="{% url 'articles' '2' %}">Last 2 days</a></li>
+                  <li><a class="verticle-menu" href="{% url 'articles' '3' %}">Last 3 days</a></li>
+                  <li><a class="verticle-menu" href="{% url 'articles' '7' %}">Last 7 days</a></li>
+                  <li><a class="verticle-menu" href="{% url 'articles' '15' %}">Last 2 weeks</a></li>
+                  <li><a class="verticle-menu" href="{% url 'articles' '30' %}">Last 1 month</a></li>
+              </ul>
+          </div>
+      </div>
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
